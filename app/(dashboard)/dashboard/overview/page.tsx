@@ -34,7 +34,7 @@ export default function DashboardPage() {
               <Button>Export Portfolio</Button>
             </div>
           </div>
-          <Tabs defaultValue="overview" className="space-y-4">
+          <Tabs defaultValue="gift" className="space-y-4">
             <TabsList>
               <TabsTrigger value="overview">Investments</TabsTrigger>
               <TabsTrigger value="gift">Gift</TabsTrigger>
