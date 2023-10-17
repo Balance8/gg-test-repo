@@ -1,4 +1,3 @@
-// columns.js
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"

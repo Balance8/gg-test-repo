@@ -46,19 +46,16 @@ export const authOptions: NextAuthOptions = {
       }
 
       if (dbUser && isNewUser) {
-        // Fetch some art pieces to invest in (assuming they exist)
         const artPieces = await db.artPiece.findMany({
-          take: 5, // Limit to 5 art pieces for example
+          take: 5,
         })
 
-        // Generate investments
         const investments = artPieces.map((artPiece) => ({
           userId: dbUser.id,
           artPieceId: artPiece.id,
-          shares: Math.floor(Math.random() * 100) + 1, // Random number of shares between 1 and 100
+          shares: Math.floor(Math.random() * 100) + 1,
         }))
 
-        // Insert investments into the database
         await db.investment.createMany({
           data: investments,
         })

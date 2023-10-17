@@ -23,12 +23,11 @@ import {
 } from "@/components/ui/select"
 import { handleGiftShares } from "@/app/(dashboard)/dashboard/actions"
 
-import { Skeleton } from "./ui/skeleton"
 import { toast } from "./ui/use-toast"
 
 interface UserItemProps {
   user: Pick<User, "id" | "name" | "createdAt">
-  currentUserShares: Investment[]
+  currentUserShares: (Investment & { artPiece: ArtPiece })[]
 }
 
 export function UserItem({ user, currentUserShares }: UserItemProps) {
@@ -121,7 +120,9 @@ export function UserItem({ user, currentUserShares }: UserItemProps) {
                     ) : (
                       currentUserShares.map((share, index) => (
                         <SelectItem key={index} value={share.id}>
-                          {share.artPieceId} - {share.shares} shares
+                          <div>
+                            {share.artPiece.title} - {share.shares} shares
+                          </div>
                         </SelectItem>
                       ))
                     )}
@@ -179,17 +180,6 @@ export function UserItem({ user, currentUserShares }: UserItemProps) {
           </form>
         </DialogContent>
       </Dialog>
-    </div>
-  )
-}
-
-UserItem.Skeleton = function UserItemSkeleton() {
-  return (
-    <div className="p-4">
-      <div className="space-y-3">
-        <Skeleton className="h-5 w-2/5" />
-        <Skeleton className="h-4 w-4/5" />
-      </div>
     </div>
   )
 }

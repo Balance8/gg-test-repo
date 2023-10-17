@@ -32,7 +32,12 @@ export default async function ToolsPage() {
     where: {
       userId: user.id,
     },
+    include: {
+      artPiece: true,
+    },
   })
+
+  console.log(currentUserShares)
 
   return (
     <DashboardShell>
