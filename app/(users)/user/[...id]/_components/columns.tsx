@@ -40,14 +40,15 @@ export const columns: ColumnDef<any>[] = [
       <DataTableColumnHeader column={column} title="Image" />
     ),
     cell: ({ row }) => (
-      <Image
-        className="object-cover"
-        src={row.getValue("imageUrl")}
-        alt={row.getValue("title")}
-        width={100}
-        height={100}
-        quality={10}
-      />
+      <div className="relative aspect-square">
+        <Image
+          className="object-cover"
+          src={row.getValue("imageUrl")}
+          alt={row.getValue("title")}
+          quality={10}
+          fill
+        />
+      </div>
     ),
   },
 ]
