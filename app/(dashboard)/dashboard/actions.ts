@@ -49,6 +49,7 @@ export const handleGiftShares = async (formData, data) => {
     })
 
     revalidatePath("/dashboard/overview")
+    revalidatePath("/")
     return {
       success: true,
       message: `Successfully gifted ${sharesToGift} shares to ${user.name}`,
