@@ -4,6 +4,7 @@ import { useRef, useState } from "react"
 import Link from "next/link"
 import { ArtPiece, Investment, User } from "@prisma/client"
 
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -162,13 +163,23 @@ export function UserItem({ user, currentUserShares }: UserItemProps) {
                 </div>
               )}
               <Button
+                variant="outline"
+                onClick={() => {
+                  setShowGiftDialog(false)
+                }}
+              >
+                Cancel
+              </Button>
+              <Button
                 type="submit"
-                disabled={
-                  parseInt(sharesToGift, 10) > maxShares ||
-                  parseInt(sharesToGift, 10) <= 0 ||
-                  isNaN(parseInt(sharesToGift, 10))
-                }
                 onClick={() => setIsLoading(true)}
+                className={cn({
+                  "cursor-not-allowed opacity-50":
+                    parseInt(sharesToGift, 10) > maxShares ||
+                    parseInt(sharesToGift, 10) <= 0 ||
+                    isNaN(parseInt(sharesToGift, 10)) ||
+                    isLoading,
+                })}
               >
                 {isLoading ? (
                   <Icons.spinner className="mr-2 h-5 w-5 animate-spin" />
