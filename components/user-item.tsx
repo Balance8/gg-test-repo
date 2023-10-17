@@ -52,13 +52,12 @@ export function UserItem({ user, currentUserShares }: UserItemProps) {
 
   async function clientAction(formData: FormData) {
     setIsLoading(true)
+
     const result = await handleGiftShares(formData, {
       user,
       currentUserShares,
       selectedShare,
     })
-
-    setIsLoading(false)
 
     if (result.success) {
       ref.current?.reset()
@@ -66,6 +65,7 @@ export function UserItem({ user, currentUserShares }: UserItemProps) {
       setSelectedShare("")
       setSharesToGift("")
       setMaxShares(0)
+      setIsLoading(false)
 
       toast({
         title: "Shares gifted successfully",

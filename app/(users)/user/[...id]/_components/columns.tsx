@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { ColumnDef } from "@tanstack/react-table"
 
 import { DataTableColumnHeader } from "./data-table-column-header"
@@ -39,10 +40,13 @@ export const columns: ColumnDef<any>[] = [
       <DataTableColumnHeader column={column} title="Image" />
     ),
     cell: ({ row }) => (
-      <img
+      <Image
+        className="object-cover"
         src={row.getValue("imageUrl")}
         alt={row.getValue("title")}
-        width={50}
+        width={100}
+        height={100}
+        quality={10}
       />
     ),
   },

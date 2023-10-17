@@ -37,8 +37,6 @@ export default async function ToolsPage() {
     },
   })
 
-  console.log(currentUserShares)
-
   return (
     <DashboardShell>
       <DashboardHeader heading="Gifts" text="Who would you like to gift to?" />
