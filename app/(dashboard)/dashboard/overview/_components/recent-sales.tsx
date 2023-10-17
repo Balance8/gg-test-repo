@@ -14,7 +14,7 @@ export function RecentGifts() {
             arthas.menethil@email.com
           </p>
         </div>
-        <div className="ml-auto font-medium">+$1,999.00</div>
+        <div className="ml-auto font-medium">+1,999.00 GP</div>
       </div>
       <div className="flex items-center">
         <Avatar className="flex h-9 w-9 items-center justify-center space-y-0 border">
@@ -27,7 +27,7 @@ export function RecentGifts() {
             master.chief@email.com
           </p>
         </div>
-        <div className="ml-auto font-medium">+$39.00</div>
+        <div className="ml-auto font-medium">+39.00 GP</div>
       </div>
       <div className="flex items-center">
         <Avatar className="h-9 w-9">
@@ -40,7 +40,7 @@ export function RecentGifts() {
             guthix.vortex@email.com
           </p>
         </div>
-        <div className="ml-auto font-medium">+$299.00</div>
+        <div className="ml-auto font-medium">+299.00 GP</div>
       </div>
       <div className="flex items-center">
         <Avatar className="h-9 w-9">
@@ -53,7 +53,7 @@ export function RecentGifts() {
             illidan.stormrage@email.com
           </p>
         </div>
-        <div className="ml-auto font-medium">+$99.00</div>
+        <div className="ml-auto font-medium">+99.00 GP</div>
       </div>
       <div className="flex items-center">
         <Avatar className="h-9 w-9">
@@ -66,7 +66,7 @@ export function RecentGifts() {
             cortana.blue@email.com
           </p>
         </div>
-        <div className="ml-auto font-medium">+$39.00</div>
+        <div className="ml-auto font-medium">+39.00 GP</div>
       </div>
     </div>
   )
