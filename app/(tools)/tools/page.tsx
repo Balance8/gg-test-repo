@@ -20,7 +20,6 @@ export default async function ToolsPage() {
   }
 
   const users = await db.user.findMany({
-    take: 10,
     where: {
       NOT: {
         email: user.email,
