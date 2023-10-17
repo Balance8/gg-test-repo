@@ -27,6 +27,7 @@ export default async function ToolsLayout({ children }: ToolsLayoutProps) {
           </MainNav>
           <UserAccountNav
             user={{
+              id: user.id,
               name: user.name,
               image: user.image,
               email: user.email,

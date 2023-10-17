@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef, useState } from "react"
+import Link from "next/link"
 import { Investment, User } from "@prisma/client"
 
 import { Button } from "@/components/ui/button"
@@ -22,6 +23,7 @@ import {
 } from "@/components/ui/select"
 import { handleGiftShares } from "@/app/(dashboard)/dashboard/actions"
 
+import { Skeleton } from "./ui/skeleton"
 import { toast } from "./ui/use-toast"
 
 interface UserItemProps {
@@ -76,7 +78,12 @@ export function UserItem({ user, currentUserShares }: UserItemProps) {
 
   return (
     <div className="flex items-center justify-between p-4">
-      <div className="grid gap-1">{user.name}</div>
+      <Link
+        href={`/user/${user.id}`}
+        className="underline underline-offset-4 hover:text-primary"
+      >
+        <div className="grid gap-1">{user.name}</div>
+      </Link>
       <Dialog open={showGiftDialog} onOpenChange={setShowGiftDialog}>
         <DialogTrigger asChild>
           <Button
@@ -172,6 +179,17 @@ export function UserItem({ user, currentUserShares }: UserItemProps) {
           </form>
         </DialogContent>
       </Dialog>
+    </div>
+  )
+}
+
+UserItem.Skeleton = function UserItemSkeleton() {
+  return (
+    <div className="p-4">
+      <div className="space-y-3">
+        <Skeleton className="h-5 w-2/5" />
+        <Skeleton className="h-4 w-4/5" />
+      </div>
     </div>
   )
 }

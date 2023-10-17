@@ -14,10 +14,12 @@ import {
 import { UserAvatar } from "@/components/user-avatar"
 
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
-  user: Pick<User, "name" | "image" | "email">
+  user: Pick<User, "id" | "name" | "image" | "email">
 }
 
 export function UserAccountNav({ user }: UserAccountNavProps) {
+  console.log(user.id)
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -38,6 +40,9 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
           </div>
         </div>
         <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link href={`/user/${user.id}`}>My Profile</Link>
+        </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href="/dashboard/overview">Dashboard</Link>
         </DropdownMenuItem>
