@@ -51,8 +51,6 @@ export function UserItem({ user, currentUserShares }: UserItemProps) {
   }
 
   async function clientAction(formData: FormData) {
-    setIsLoading(true)
-
     const result = await handleGiftShares(formData, {
       user,
       currentUserShares,
@@ -168,9 +166,9 @@ export function UserItem({ user, currentUserShares }: UserItemProps) {
                 disabled={
                   parseInt(sharesToGift, 10) > maxShares ||
                   parseInt(sharesToGift, 10) <= 0 ||
-                  isNaN(parseInt(sharesToGift, 10)) ||
-                  isLoading
+                  isNaN(parseInt(sharesToGift, 10))
                 }
+                onClick={() => setIsLoading(true)}
               >
                 {isLoading ? (
                   <Icons.spinner className="mr-2 h-5 w-5 animate-spin" />
