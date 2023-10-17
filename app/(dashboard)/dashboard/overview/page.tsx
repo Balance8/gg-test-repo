@@ -1,5 +1,6 @@
 import { Metadata } from "next"
 
+import ToolsPage from "@/app/(tools)/tools/page"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -9,7 +10,6 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import ToolsPage from "@/app/(tools)/tools/page"
 
 import { CalendarDateRangePicker } from "./_components/date-range-picker"
 import { Overview } from "./_components/overview"

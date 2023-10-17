@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react"
 import Link from "next/link"
-import { Investment, User } from "@prisma/client"
+import { ArtPiece, Investment, User } from "@prisma/client"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/select"
 import { handleGiftShares } from "@/app/(dashboard)/dashboard/actions"
 
+import { Icons } from "./icons"
 import { toast } from "./ui/use-toast"
 
 interface UserItemProps {
@@ -35,6 +36,7 @@ export function UserItem({ user, currentUserShares }: UserItemProps) {
   const [selectedShare, setSelectedShare] = useState("")
   const [sharesToGift, setSharesToGift] = useState<string>("")
   const [maxShares, setMaxShares] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
 
   const ref = useRef<HTMLFormElement>(null)
 
@@ -49,11 +51,14 @@ export function UserItem({ user, currentUserShares }: UserItemProps) {
   }
 
   async function clientAction(formData: FormData) {
+    setIsLoading(true)
     const result = await handleGiftShares(formData, {
       user,
       currentUserShares,
       selectedShare,
     })
+
+    setIsLoading(false)
 
     if (result.success) {
       ref.current?.reset()
@@ -159,22 +164,19 @@ export function UserItem({ user, currentUserShares }: UserItemProps) {
                 </div>
               )}
               <Button
-                variant="outline"
-                onClick={() => {
-                  setShowGiftDialog(false)
-                }}
-              >
-                Cancel
-              </Button>
-              <Button
                 type="submit"
                 disabled={
                   parseInt(sharesToGift, 10) > maxShares ||
                   parseInt(sharesToGift, 10) <= 0 ||
-                  isNaN(parseInt(sharesToGift, 10))
+                  isNaN(parseInt(sharesToGift, 10)) ||
+                  isLoading
                 }
               >
-                Confirm
+                {isLoading ? (
+                  <Icons.spinner className="mr-2 h-5 w-5 animate-spin" />
+                ) : (
+                  "Confirm"
+                )}
               </Button>
             </div>
           </form>
