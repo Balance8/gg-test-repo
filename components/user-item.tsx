@@ -174,7 +174,7 @@ export function UserItem({ user, currentUserShares }: UserItemProps) {
               </Button>
               <Button
                 type="submit"
-                className="aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
+                className="aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
                 onClick={() => {
                   setIsLoading(true)
                 }}
