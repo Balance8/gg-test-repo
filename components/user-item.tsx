@@ -4,7 +4,6 @@ import { useRef, useState } from "react"
 import Link from "next/link"
 import { ArtPiece, Investment, User } from "@prisma/client"
 
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -51,21 +50,26 @@ export function UserItem({ user, currentUserShares }: UserItemProps) {
     }
   }
 
-  async function clientAction(formData: FormData) {
+  const resetFormAndState = () => {
+    ref.current?.reset()
+    setSelectedShare("")
+    setSharesToGift("")
+    setMaxShares(0)
+    setIsLoading(false)
+  }
+
+  const clientAction = async (formData: FormData) => {
+    setIsLoading(true)
+
     const result = await handleGiftShares(formData, {
       user,
       currentUserShares,
       selectedShare,
     })
 
+    resetFormAndState()
+
     if (result.success) {
-      ref.current?.reset()
-
-      setSelectedShare("")
-      setSharesToGift("")
-      setMaxShares(0)
-      setIsLoading(false)
-
       toast({
         title: "Shares gifted successfully",
         description: result.message,
@@ -173,13 +177,13 @@ export function UserItem({ user, currentUserShares }: UserItemProps) {
               <Button
                 type="submit"
                 onClick={() => setIsLoading(true)}
-                className={cn({
-                  "cursor-not-allowed opacity-50":
-                    parseInt(sharesToGift, 10) > maxShares ||
-                    parseInt(sharesToGift, 10) <= 0 ||
-                    isNaN(parseInt(sharesToGift, 10)) ||
-                    isLoading,
-                })}
+                className="disabled:cursor-not-allowed disabled:opacity-50"
+                disabled={
+                  parseInt(sharesToGift, 10) > maxShares ||
+                  parseInt(sharesToGift, 10) <= 0 ||
+                  isNaN(parseInt(sharesToGift, 10)) ||
+                  isLoading
+                }
               >
                 {isLoading ? (
                   <Icons.spinner className="mr-2 h-5 w-5 animate-spin" />
