@@ -3,12 +3,23 @@
 import { revalidatePath } from "next/cache"
 
 import { db } from "@/lib/db"
+import { getCurrentUser } from "@/lib/session"
 
 export const handleGiftShares = async (formData, data) => {
-  const { user, currentUserShares, selectedShare } = data
+  const refetchedUser = await getCurrentUser()
+
+  if (!refetchedUser) {
+    return { success: false, message: "User not authenticated." }
+  }
+
+  const currentUserSharesFromDB = await db.investment.findMany({
+    where: { userId: refetchedUser.id },
+  })
+
+  const { user, selectedShare } = data
   const sharesToGift = parseInt(formData.get("shares"), 10)
 
-  const selectedInvestment = currentUserShares.find(
+  const selectedInvestment = currentUserSharesFromDB.find(
     (share) => share.id === selectedShare
   )
 
@@ -50,6 +61,7 @@ export const handleGiftShares = async (formData, data) => {
 
     revalidatePath("/dashboard/overview")
     revalidatePath("/user")
+
     return {
       success: true,
       message: `Successfully gifted ${sharesToGift} shares to ${user.name}`,
