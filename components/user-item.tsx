@@ -59,8 +59,6 @@ export function UserItem({ user, currentUserShares }: UserItemProps) {
   }
 
   const clientAction = async (formData: FormData) => {
-    setIsLoading(true)
-
     const result = await handleGiftShares(formData, {
       user,
       currentUserShares,
@@ -176,12 +174,15 @@ export function UserItem({ user, currentUserShares }: UserItemProps) {
               </Button>
               <Button
                 type="submit"
-                onClick={() => setIsLoading(true)}
-                className="disabled:cursor-not-allowed disabled:opacity-50"
-                disabled={
+                className="aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
+                onClick={() => {
+                  setIsLoading(true)
+                }}
+                aria-disabled={
                   parseInt(sharesToGift, 10) > maxShares ||
                   parseInt(sharesToGift, 10) <= 0 ||
-                  isNaN(parseInt(sharesToGift, 10))
+                  isNaN(parseInt(sharesToGift, 10)) ||
+                  isLoading
                 }
               >
                 {isLoading ? (
