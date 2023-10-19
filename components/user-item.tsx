@@ -181,8 +181,7 @@ export function UserItem({ user, currentUserShares }: UserItemProps) {
                 disabled={
                   parseInt(sharesToGift, 10) > maxShares ||
                   parseInt(sharesToGift, 10) <= 0 ||
-                  isNaN(parseInt(sharesToGift, 10)) ||
-                  isLoading
+                  isNaN(parseInt(sharesToGift, 10))
                 }
               >
                 {isLoading ? (
