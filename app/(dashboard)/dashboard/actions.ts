@@ -6,30 +6,35 @@ import { db } from "@/lib/db"
 import { getCurrentUser } from "@/lib/session"
 
 export const handleGiftShares = async (formData, data) => {
-  const refetchedUser = await getCurrentUser()
-
-  if (!refetchedUser) {
-    return { success: false, message: "User not authenticated." }
-  }
-
-  const currentUserSharesFromDB = await db.investment.findMany({
-    where: { userId: refetchedUser.id },
-  })
-
-  const { user, selectedShare } = data
-  const sharesToGift = parseInt(formData.get("shares"), 10)
-
-  const selectedInvestment = currentUserSharesFromDB.find(
-    (share) => share.id === selectedShare
-  )
-
-  if (!selectedInvestment || sharesToGift > selectedInvestment.shares) {
-    return { success: false, message: "Cannot gift more shares than you own." }
-  }
+  let sharesToGift
+  let user
 
   try {
     await db.$transaction(async (prisma) => {
+      const refetchedUser = await getCurrentUser()
+
+      if (!refetchedUser) {
+        throw new Error("User not authenticated.")
+      }
+
+      const currentUserSharesFromDB = await prisma.investment.findMany({
+        where: { userId: refetchedUser.id },
+      })
+
+      user = data.user
+      const selectedShare = data.selectedShare
+      sharesToGift = parseInt(formData.get("shares"), 10)
+
+      const selectedInvestment = currentUserSharesFromDB.find(
+        (share) => share.id === selectedShare
+      )
+
+      if (!selectedInvestment || sharesToGift > selectedInvestment.shares) {
+        throw new Error("Cannot gift more shares than you own.")
+      }
+
       const remainingShares = selectedInvestment.shares - sharesToGift
+
       if (remainingShares === 0) {
         await prisma.investment.delete({ where: { id: selectedInvestment.id } })
       } else {
@@ -57,10 +62,10 @@ export const handleGiftShares = async (formData, data) => {
           },
         })
       }
-    })
 
-    revalidatePath("/dashboard/overview")
-    revalidatePath("/user")
+      revalidatePath("/dashboard/overview")
+      revalidatePath("/user")
+    })
 
     return {
       success: true,
@@ -69,7 +74,7 @@ export const handleGiftShares = async (formData, data) => {
   } catch (error) {
     return {
       success: false,
-      message: "An error occurred while gifting shares.",
+      message: error.message || "An error occurred while gifting shares.",
     }
   }
 }
